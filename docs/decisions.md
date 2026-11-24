@@ -876,6 +876,14 @@ To confirm:
   lost the dark shadow; the yellow `ui/base/ring` shadow is now 2px and the box border is `ui/base/ring`. Checked in
   light and dark. Needs publishing.
 
+### DayRow: smooth close when a day is turned off (2026-11-24, Adriana asked)
+
+- Turning a day off: the times fade out while the row's height closes, and "Closed" fades in in the same place.
+  Turning it on does the reverse. 250 ms, ease in-out (Svelte `slide` + opacity, and `fade`). Before: the times
+  disappeared at once and the whole list jumped up.
+- With "reduce motion" on in the operating system there is no animation.
+- Code only. Figma does not describe this motion (prototype interactions not added).
+
 ## Corrections to the CSS export (Figma wins)
 
 - The export referenced typography variables that do not exist (`--fonts-size-*`, `--font-family-*`…).

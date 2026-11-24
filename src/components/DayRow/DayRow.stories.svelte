@@ -1,6 +1,6 @@
 <script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import { expect, userEvent, within } from 'storybook/test';
+	import { expect, userEvent, waitFor, within } from 'storybook/test';
 	import DayRow from './DayRow.svelte';
 
 	const { Story } = defineMeta({
@@ -31,7 +31,10 @@
 		const canvas = within(canvasElement);
 		await expect(canvas.getByLabelText('Tuesday opens at')).toBeInTheDocument();
 		await userEvent.click(canvas.getByRole('switch', { name: 'Tuesday' }));
-		await expect(canvas.queryByLabelText('Tuesday opens at')).not.toBeInTheDocument();
+		// The times fade out (250 ms) before they leave the page.
+		await waitFor(() =>
+			expect(canvas.queryByLabelText('Tuesday opens at')).not.toBeInTheDocument()
+		);
 		await expect(canvas.getAllByText('Closed')).toHaveLength(2);
 	}}
 >
